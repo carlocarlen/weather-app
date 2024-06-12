@@ -12,8 +12,11 @@ export class LocationFormComponent {
 
   zipCode: string = "";
 
+  submittedCodes: string[] = [];
+
   onSubmit() {
     console.log(`Submitted zip code ${this.zipCode}`);
+    this.submittedCodes.push(this.zipCode);
   }
 
 }

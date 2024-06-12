@@ -4,3 +4,10 @@
     <input type="text" id="zipCode" [(ngModel)]="zipCode" name="zipCode">
     <input type="submit" value="Input location">
 </form>
+
+@if (submittedCodes.length > 0) {
+    <h2>You submitted the following codes during current session:</h2>
+    @for (code of submittedCodes; track $index) {
+        <p>{{ code }}</p>
+    }
+}
