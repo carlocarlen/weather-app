@@ -1,6 +1,6 @@
 <p>location-form works!</p>
-<form>
-    <label for="zip-code">Enter a Zip code: </label>
-    <input type="text" id="zip-code">
+<form (ngSubmit)="onSubmit()">
+    <label for="zipCode">Enter a Zip code: </label>
+    <input type="text" id="zipCode" [(ngModel)]="zipCode" name="zipCode">
     <input type="submit" value="Input location">
 </form>
