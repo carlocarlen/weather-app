@@ -12,19 +12,14 @@ export class LocationStorageService {
     private localStorage: LocalStorageService,
   ) { }
 
-  /**
-   * 
-   * @param code string to store
-   */
   addCode(code: string) {
-    let allCodes: string[] = this.getAllCodes();
-    allCodes.push(code);
-    this.localStorage.setItem(LocationStorageService.CODES, this.arrayToString(allCodes));
+    let newCodes: Set<string> = this.getAllCodes().add(code);
+    this.localStorage.setItem(LocationStorageService.CODES, this.setToString(newCodes));
   }
 
-  getAllCodes(): string[] {
+  getAllCodes(): Set<string> {
     const stored: string = this.localStorage.getItem(LocationStorageService.CODES) ?? "";
-    return this.stringToArray(stored);
+    return this.stringToSet(stored);
   }
 
   /**
@@ -38,11 +33,11 @@ export class LocationStorageService {
 
   removeAllCodes() {}
 
-  private stringToArray(input: string): string[] {
-    return input.split(LocationStorageService.SEP);
+  private stringToSet(input: string): Set<string> {
+    return input.length == 0 ? new Set<string>() : new Set<string>(input.split(LocationStorageService.SEP));
   }
 
-  private arrayToString(input: string[]): string {
-    return input.join(LocationStorageService.SEP);
+  private setToString(input: Set<string>): string {
+    return Array.from(input).join(LocationStorageService.SEP);
   }
 }

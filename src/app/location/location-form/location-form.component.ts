@@ -15,8 +15,8 @@ export class LocationFormComponent implements OnInit {
 
   submittedCodes: string[] = [];
 
-  storedCodes: string[] = [];
-
+  storedCodes = new Set<string>();
+  
   constructor(
     private locationStorage: LocationStorageService,
   ) {}
