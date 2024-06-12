@@ -5,6 +5,8 @@ import { LocalStorageService } from '../shared/local-storage.service';
   providedIn: 'root'
 })
 export class LocationStorageService {
+  static readonly CODES = "CODES";
+  static readonly SEP = ",";
 
   constructor(
     private localStorage: LocalStorageService,
@@ -14,10 +16,15 @@ export class LocationStorageService {
    * 
    * @param code string to store
    */
-  addCode(code: string) {}
+  addCode(code: string) {
+    let allCodes: string[] = this.getAllCodes();
+    allCodes.push(code);
+    this.localStorage.setItem(LocationStorageService.CODES, this.arrayToString(allCodes));
+  }
 
   getAllCodes(): string[] {
-    return [];
+    const stored: string = this.localStorage.getItem(LocationStorageService.CODES) ?? "";
+    return this.stringToArray(stored);
   }
 
   /**
@@ -30,4 +37,12 @@ export class LocationStorageService {
   }
 
   removeAllCodes() {}
+
+  private stringToArray(input: string): string[] {
+    return input.split(LocationStorageService.SEP);
+  }
+
+  private arrayToString(input: string[]): string {
+    return input.join(LocationStorageService.SEP);
+  }
 }
