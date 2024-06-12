@@ -11,3 +11,10 @@
         <p>{{ code }}</p>
     }
 }
+
+@if (storedCodes.length > 0) {
+    <h2>You submitted the following codes during current session:</h2>
+    @for (code of storedCodes; track $index) {
+        <p>{{ code }}</p>
+    }
+}
