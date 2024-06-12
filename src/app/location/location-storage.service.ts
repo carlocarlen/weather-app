@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { LocalStorageService } from '../shared/local-storage.service';
 
 @Injectable({
@@ -8,6 +8,8 @@ export class LocationStorageService {
   static readonly CODES = "CODES";
   static readonly SEP = ",";
 
+  storedCodes = signal(this.getAllCodes());
+
   constructor(
     private localStorage: LocalStorageService,
   ) { }
@@ -15,12 +17,14 @@ export class LocationStorageService {
   addCode(code: string) {
     let newCodes: Set<string> = this.getAllCodes().add(code);
     this.localStorage.setItem(LocationStorageService.CODES, this.setToString(newCodes));
+    this.storedCodes.set(this.getAllCodes());
   }
 
-  getAllCodes(): Set<string> {
+  private getAllCodes(): Set<string> {
     const stored: string = this.localStorage.getItem(LocationStorageService.CODES) ?? "";
     return this.stringToSet(stored);
   }
+
 
   /**
    * 

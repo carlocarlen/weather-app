@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LocationStorageService } from '../location-storage.service';
 
@@ -15,22 +15,21 @@ export class LocationFormComponent implements OnInit {
 
   submittedCodes: string[] = [];
 
-  storedCodes = new Set<string>();
-  
+  storedCodes: Signal<Set<string>>
+
   constructor(
     private locationStorage: LocationStorageService,
-  ) {}
+  ) {
+    this.storedCodes = locationStorage.storedCodes
+  }
 
   ngOnInit(): void {
-    this.storedCodes = this.locationStorage.getAllCodes();
   }
 
   onSubmit() {
     console.log(`Submitted zip code ${this.zipCode}`);
     this.submittedCodes.push(this.zipCode);
-    // TODO make this reactive!
     this.locationStorage.addCode(this.zipCode);
-    this.storedCodes = this.locationStorage.getAllCodes();
   }
 
 }

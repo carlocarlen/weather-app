@@ -12,9 +12,9 @@
     }
 }
 
-@if (storedCodes.size > 0) {
+@if (storedCodes().size > 0) {
     <h2>You submitted the following codes since beginning of time:</h2>
-    @for (code of storedCodes; track $index) {
+    @for (code of storedCodes(); track $index) {
         <p>{{ code }}</p>
     }
 }
